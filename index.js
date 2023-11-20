@@ -297,9 +297,22 @@ console.log("divide(2)(10)", divide(2)(10)); // Виведе: 0.2
 
 function memoizedArea() {
   // Ініціалізуємо примітивні змінні для зберігання попереднього аргументу та результату
-
+let prevSide = null
+let prevResult = null
   // Повертаємо функцію яка приймає аргумент side - сторону квадрата
-
+return function(side) {
+  if (side === prevSide) {
+    console.log("Fetching from cache");
+    return prevResult
+  }
+  else {
+    console.log("Calculating result")
+    let result = side * side
+    prevSide = side;
+    prevResult = result;
+    return result
+  }
+}
   // Перевіряємо, чи є введена сторона такою ж, як і в попередньому виклику
   // Виводимо повідомлення Fetching from cache
 
@@ -313,13 +326,13 @@ function memoizedArea() {
 }
 
 //Створюємо змінну squareArea якій присвоємо результат виконання функції memoizedArea
-
+let squareArea = memoizedArea()
 console.log("Завдання 15 ====================================");
 // Розкоментуйте після виконаня завдання
-// console.log("squareArea(5)", squareArea(5)); // Обчислює і виводить 25
-// console.log("squareArea(5)", squareArea(5)); // Виводить "Fetching from cache" і виводить 25 з кешу
-// console.log("squareArea(6)", squareArea(6)); // Обчислює і виводить 36
-// console.log("squareArea(6)", squareArea(6)); // Виводить "Fetching from cache" і виводить 36 з кешу
+console.log("squareArea(5)", squareArea(5)); // Обчислює і виводить 25
+console.log("squareArea(5)", squareArea(5)); // Виводить "Fetching from cache" і виводить 25 з кешу
+console.log("squareArea(6)", squareArea(6)); // Обчислює і виводить 36
+console.log("squareArea(6)", squareArea(6)); // Виводить "Fetching from cache" і виводить 36 з кешу
 
 // Задача 16: Задача: створити функціональний вираз для обчислення кубу числа.
 let cube = function (n) {
